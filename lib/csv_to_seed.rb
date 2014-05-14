@@ -1,4 +1,5 @@
 require 'csv'
+require 'ruby-progressbar'
 
 class CSVToSeed
   attr_accessor :file, :headers
@@ -23,6 +24,7 @@ class CSVToSeed
     fix_csv = csv_object.to_a.map {|row|
       @headers = row.headers
       row.to_hash
+      progress_bar.increment
     }
 
     replace_and_fix_csv_string fix_csv.to_s
@@ -49,6 +51,13 @@ class CSVToSeed
     end
   end
   TEXT
+  end
+
+  def number_of_rows
+    @file.split("\n").length - 1
+  end
+  def progress_bar
+    @progress_bar ||= ProgressBar.create(title: 'Rows')#, total: number_of_rows)
   end
 
   def write_seedrb_file
