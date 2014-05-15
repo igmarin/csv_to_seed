@@ -1,7 +1,8 @@
+require 'csv_to_seed/version'
 require 'csv'
 require 'ruby-progressbar'
 
-class CSVToSeed
+module CSVToSeed
   attr_accessor :file, :headers
 
   def initialize(args)
